@@ -1,0 +1,208 @@
+default class
+---------------------
+ 
+// Java program to illustrate default modifier  
+package p1;  
+  
+// Class Geek is having Default access modifier  
+class Geek  
+{  
+    void display()  
+    {  
+        System.out.println("Hello World!");  
+    }  
+}  
+----------
+default class containing private members
+
+// Default class with private members
+class DefaultClass {
+    private int privateMember;
+
+    // Method to access private member
+    public void setPrivateMember(int value) {
+        // Private member is accessible within the same class
+        privateMember = value;
+    }
+
+    // Method to print private member (for demonstration purposes)
+    public void printPrivateMember() {
+        System.out.println("Private member value: " + privateMember);
+    }
+}
+
+// Another class in the same package
+public class AnotherClass {
+    public static void main(String[] args) {
+        DefaultClass instance = new DefaultClass();
+
+        // Attempting to access private member directly from another class in the same package
+        // instance.privateMember = 10; // Compilation error: privateMember has private access in DefaultClass
+
+        // But we can access it using public methods provided by the DefaultClass
+        instance.setPrivateMember(10); // This is allowed
+        instance.printPrivateMember(); // This will print: "Private member value: 10"
+    }
+}
+--------------
+default class with public members
+
+// Default class with public members
+class DefaultClass {
+    public int publicMember;
+
+    // Constructor
+    public DefaultClass(int value) {
+        this.publicMember = value;
+    }
+}
+
+// Another class in the same package
+public class AnotherClass {
+    public static void main(String[] args) {
+        DefaultClass instance = new DefaultClass(5);
+
+        // Accessing public member directly from another class in the same package
+        System.out.println("Public member value: " + instance.publicMember); // This will print: "Public member value: 5"
+    }
+}
+---------------
+default class with protected members
+
+// Default class with protected members
+class DefaultClass {
+    protected int protectedMember;
+
+    // Constructor
+    public DefaultClass(int value) {
+        this.protectedMember = value;
+    }
+}
+
+// Another class in the same package
+public class AnotherClass {
+    public static void main(String[] args) {
+        DefaultClass instance = new DefaultClass(5);
+
+        // Accessing protected member directly from another class in the same package
+        System.out.println("Protected member value: " + instance.protectedMember); // This will print: "Protected member value: 5"
+    }
+}
+
+// Subclass of DefaultClass in a different package
+package differentPackage;
+
+import packageWithDefaultAccess.DefaultClass;
+
+public class Subclass extends DefaultClass {
+    public Subclass(int value) {
+        super(value);
+    }
+
+    // Method to access protected member
+    public void accessProtectedMember() {
+        System.out.println("Protected member value in subclass: " + protectedMember); // This will print: "Protected member value in subclass: 5"
+    }
+}
+----------------------------------
+
+private class
+-------------
+
+// Java program to illustrate error while 
+// using class from different package with 
+// private modifier 
+package p1; 
+
+class A 
+{ 
+private void display() 
+	{ 
+		System.out.println("GeeksforGeeks"); 
+	} 
+} 
+
+class B 
+{ 
+public static void main(String args[]) 
+	{ 
+		A obj = new A(); 
+		// Trying to access private method 
+		// of another class 
+		obj.display(); 
+	} 
+} 
+--------------------------
+private class with public members
+
+public class Outer {
+    private class PrivateInner {
+        public void publicMethod() {
+            System.out.println("This is a public method in PrivateInner class");
+        }
+    }
+
+    private PrivateInner privateInnerInstance; // Private instance of the private inner class
+
+    public Outer() {
+        privateInnerInstance = new PrivateInner();
+    }
+
+    public void accessPrivateInnerPublicMethod() {
+        // Accessing public method of PrivateInner class from within Outer class
+        privateInnerInstance.publicMethod();
+    }
+}
+
+public class AnotherClass {
+    public void someMethod() {
+        Outer outer = new Outer();
+        // Attempting to access the public method of PrivateInner class from another class results in a compilation error
+        // outer.privateInnerInstance.publicMethod(); // Compilation error
+    }
+}
+--------------------------
+private class with protected members
+
+public class Outer {
+    private class PrivateInner {
+        protected void protectedMethod() {
+            System.out.println("This is a protected method in PrivateInner class");
+        }
+    }
+
+    public void accessProtectedInnerMethod() {
+        PrivateInner privateInnerInstance = new PrivateInner();
+        // Accessing protected method of PrivateInner class from within Outer class
+        privateInnerInstance.protectedMethod();
+    }
+}
+
+public class Subclass extends Outer {
+    public void accessProtectedMethodFromSubclass() {
+        // Attempting to access the protected method of PrivateInner class from a subclass
+        // Results in compilation error if accessed directly
+        // PrivateInner privateInnerInstance = new PrivateInner(); // Compilation error
+        // privateInnerInstance.protectedMethod(); // Compilation error
+
+        // However, you can access the protected method indirectly via inheritance
+        this.accessProtectedInnerMethod();
+    }
+}
+--------------------------------
+
+protected
+--------------
+// Java program to illustrate  
+// protected modifier  
+package p1;  
+  
+// Class A  
+public class A  
+{  
+protected void display()  
+    {  
+        System.out.println("GeeksforGeeks");  
+    }  
+}  
+
